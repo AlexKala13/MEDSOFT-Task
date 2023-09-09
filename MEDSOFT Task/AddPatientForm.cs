@@ -155,73 +155,26 @@ namespace MEDSOFT_Task
             email = emailTb.Text; // პაციენტის ელ.ფოსტა
 
 
-            // პაციენტის დამატება მონაცემთა ბაზაში //
+            // SQL პროცედურის გამოყენებითა და connection string-ის მეშვეობით ხდება ბაზაში ახალი პაციენტის დამატება
 
-            string insertQuery = "INSERT INTO Patients (FullName, BirthDate, GenderID"; 
-
-            if (!string.IsNullOrEmpty(phoneNumber)) // მოწმდება მითითებულია თუ არა ტელეფონი, ასეთ შემთხვევაში query string-ს დაემატება ტელეფონის მონაცემი
+            using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                insertQuery += ", Phone";
-            }
-
-            if (!string.IsNullOrEmpty(address)) // მოწმდება მითითებულია თუ არა მისამართი, ასეთ შემთხვევაში query string-ს დაემატება მისამართის მონაცემი
-            {
-                insertQuery += ", Address";
-            }
-
-            if (!string.IsNullOrEmpty(email)) // მოწმდება მითითებულია თუ არა ელ.ფოსტა, ასეთ შემთხვევაში query string-ს დაემატება ელ.ფოსტის მონაცემი
-            {
-                insertQuery += ", Email";
-            }
-
-            insertQuery += ", PersonalID) VALUES (@FullName, @BirthDate, @GenderID";
-
-            if (!string.IsNullOrEmpty(phoneNumber))
-            {
-                insertQuery += ", @Phone";
-            }
-
-            if (!string.IsNullOrEmpty(address))
-            {
-                insertQuery += ", @Address";
-            }
-
-            if (!string.IsNullOrEmpty(email))
-            {
-                insertQuery += ", @Email";
-            }
-
-            insertQuery += ", @PersonalID)";
-
-
-            // query string-ისა და connection string-ის მეშვეობით ხდება ბაზაში ახალი პაციენტის დამატება
-
-            using (SqlCommand command = new SqlCommand(insertQuery, connection))
-            {
-                command.Parameters.AddWithValue("@FullName", name);
-                command.Parameters.AddWithValue("@BirthDate", birthdate);
-                command.Parameters.AddWithValue("@GenderID", genderID);
-
-                if (!string.IsNullOrEmpty(phoneNumber))
+                using (SqlCommand command = new SqlCommand("AddPatient", connection))
                 {
-                    command.Parameters.AddWithValue("@Phone", phoneNumber);
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    command.Parameters.AddWithValue("@FullName", name);
+                    command.Parameters.AddWithValue("@BirthDate", birthdate);
+                    command.Parameters.AddWithValue("@GenderID", genderID);
+                    command.Parameters.AddWithValue("@Phone", string.IsNullOrEmpty(phoneNumber) ? (object)DBNull.Value : phoneNumber);
+                    command.Parameters.AddWithValue("@Address", string.IsNullOrEmpty(address) ? (object)DBNull.Value : address);
+                    command.Parameters.AddWithValue("@Email", string.IsNullOrEmpty(email) ? (object)DBNull.Value : email);
+                    command.Parameters.AddWithValue("@PersonalID", personalId);
+
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                    connection.Close();
                 }
-
-                if (!string.IsNullOrEmpty(address))
-                {
-                    command.Parameters.AddWithValue("@Address", address);
-                }
-
-                if (!string.IsNullOrEmpty(email))
-                {
-                    command.Parameters.AddWithValue("@Email", email);
-                }
-
-                command.Parameters.AddWithValue("@PersonalID", personalId);
-
-                connection.Open();
-                command.ExecuteNonQuery();
-                connection.Close();
             }
 
 

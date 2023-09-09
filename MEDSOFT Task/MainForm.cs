@@ -28,14 +28,19 @@ namespace MEDSOFT_Task
             LoadPatientsData();
         }
 
-        private void InitializeDatabase() // მონაცემთა ბაზასთან დაკავშირდება და მონაცემების წამოღება
+        private void InitializeDatabase() // მონაცემთა ბაზასთან დაკავშირდება და მონაცემების წამოღება პროცედურის გამოყენებით
         {
             connection = new SqlConnection(connectionString);
-            adapter = new SqlDataAdapter("SELECT P.ID, P.FullName, P.BirthDate, G.GenderName, P.Phone, P.Address, P.Email, P.PersonalId " +
-                                         "FROM Patients AS P " +
-                                         "INNER JOIN Gender AS G ON P.GenderID = G.GenderID", connection);
+            adapter = new SqlDataAdapter();
             dataTable = new DataTable();
-            adapter.Fill(dataTable);
+
+            using (SqlCommand command = new SqlCommand("GetPatientsData", connection))
+            {
+                command.CommandType = CommandType.StoredProcedure;
+
+                adapter.SelectCommand = command;
+                adapter.Fill(dataTable);
+            }
         }
 
 
@@ -155,17 +160,18 @@ namespace MEDSOFT_Task
 
                 DialogResult result = MessageBox.Show($"გსურთ მონიშნული ჩანაწერის წაშლა?", "წაშლის დადასტურება", 
                     MessageBoxButtons.YesNo,
-                    MessageBoxIcon.Question); 
+                    MessageBoxIcon.Question);
 
                 if (result == DialogResult.Yes)
                 {
                     try
                     {
-                        // მონაცემთა ბაზიდან ამოშლა
-                        string query = "DELETE FROM Patients WHERE ID = @PatientID";
-                        using (SqlCommand command = new SqlCommand(query, connection))
+                        // მონაცემთა ბაზიდან პაციენტის ამოშლა პროცედურის გამოძახებით
+                        using (SqlCommand command = new SqlCommand("DeletePatient", connection))
                         {
+                            command.CommandType = CommandType.StoredProcedure;
                             command.Parameters.AddWithValue("@PatientID", patientId);
+
                             connection.Open();
                             command.ExecuteNonQuery();
                             connection.Close();
@@ -179,7 +185,9 @@ namespace MEDSOFT_Task
                         MessageBox.Show($"წაშლა ვერ მოხერხდა!\n{ex}", "შეცდომა");
                     }
                 }
-            } else
+
+            }
+            else
             {
                 MessageBox.Show("აირჩიეთ პაციენტი!", "შეცდომა", MessageBoxButtons.OK); // პაციენტი არაა არჩეული
             }

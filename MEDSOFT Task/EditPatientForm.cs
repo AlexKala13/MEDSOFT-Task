@@ -52,9 +52,9 @@ namespace MEDSOFT_Task
         {
             try
             {
-                string query = "SELECT FullName, BirthDate, GenderID, Phone, Address, Email, PersonalID FROM Patients WHERE ID = @PatientID"; // მონაცემების წამოღება პაციენტების ცხრილიდან არჩეული პაციენტის ID-ით
-                using (SqlCommand command = new SqlCommand(query, connection)) // დაკავშირება ბაზასთან
+                using (SqlCommand command = new SqlCommand("GetPatient", connection))  // არჩეული პაციენტის მონაცემების წამოღება პროცედურის გამოყენებით
                 {
+                    command.CommandType = CommandType.StoredProcedure;
                     command.Parameters.AddWithValue("@PatientID", patientId);
 
                     connection.Open();
@@ -71,7 +71,8 @@ namespace MEDSOFT_Task
                         emailTb.Text = reader["Email"].ToString();
                         personalIdTb.Text = reader["PersonalID"].ToString();
 
-                        foreach (KeyValuePair<int, string> item in genderCb.Items) // სქესის კომბობოქსში პაციენტის სქესის ამორჩევა
+                        // სქესის კომბობოქსში პაციენტის სქესის ამორჩევა
+                        foreach (KeyValuePair<int, string> item in genderCb.Items)
                         {
                             if (item.Key == genderID)
                             {
@@ -80,15 +81,18 @@ namespace MEDSOFT_Task
                             }
                         }
                     }
-
                     reader.Close();
-                    connection.Close();
                 }
             }
-            catch (Exception ex) // ყოველი შემთხვევისთვის, exception-ის დაჭერა :D
+            catch (Exception ex)
             {
-                MessageBox.Show($"მოხდა შეცდომა პაციენტის მონაცემების წამოღებისას : {ex.Message}", "შეცდომა");
+                MessageBox.Show($"მოხდა შეცდომა პაციენტის მონაცემების წამოღებისას: {ex.Message}", "შეცდომა");
             }
+            finally
+            {
+                connection.Close();
+            }
+
         }
 
         private void editBtn_Click(object sender, EventArgs e) // რედაქტირების ფუნქცია
@@ -199,57 +203,27 @@ namespace MEDSOFT_Task
             email = emailTb.Text; // პაციენტის ელ.ფოსტა
 
 
-            // არჩეული პაციენტის მონაცემების რედაქტირება მონაცემთა ბაზაში //
+            // SQL პროცედურისა და connection string-ის მეშვეობით ხდება ბაზაში ახალი პაციენტის დამატება
 
-            string insertQuery = "UPDATE Patients SET FullName = @FullName, BirthDate = @BirthDate, GenderID = @GenderID";
-
-            if (!string.IsNullOrEmpty(phoneNumber)) // მოწმდება მითითებულია თუ არა ტელეფონი, ასეთ შემთხვევაში query string-ს დაემატება ტელეფონის მონაცემი
+            using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                insertQuery += ", Phone = @Phone";
-            }
-
-            if (!string.IsNullOrEmpty(address)) // მოწმდება მითითებულია თუ არა მისამართი, ასეთ შემთხვევაში query string-ს დაემატება მისამართის მონაცემი
-            {
-                insertQuery += ", Address = @Address";
-            }
-
-            if (!string.IsNullOrEmpty(email)) // მოწმდება მითითებულია თუ არა ელ.ფოსტა, ასეთ შემთხვევაში query string-ს დაემატება ელ.ფოსტის მონაცემი
-            {
-                insertQuery += ", Email = @Email";
-            }
-
-            insertQuery += ", PersonalID = @PersonalID WHERE ID = @PatientID";
-
-
-            // query string-ისა და connection string-ის მეშვეობით ხდება ბაზაში ახალი პაციენტის დამატება
-
-            using (SqlCommand command = new SqlCommand(insertQuery, connection))
-            {
-                command.Parameters.AddWithValue("@FullName", name);
-                command.Parameters.AddWithValue("@BirthDate", birthdate);
-                command.Parameters.AddWithValue("@GenderID", genderID);
-                command.Parameters.AddWithValue("@PatientID", patientId);
-
-                if (!string.IsNullOrEmpty(phoneNumber))
+                using (SqlCommand command = new SqlCommand("UpdatePatient", connection))
                 {
-                    command.Parameters.AddWithValue("@Phone", phoneNumber);
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    command.Parameters.AddWithValue("@PatientID", patientId);
+                    command.Parameters.AddWithValue("@FullName", name);
+                    command.Parameters.AddWithValue("@BirthDate", birthdate);
+                    command.Parameters.AddWithValue("@GenderID", genderID);
+                    command.Parameters.AddWithValue("@Phone", string.IsNullOrEmpty(phoneNumber) ? (object)DBNull.Value : phoneNumber);
+                    command.Parameters.AddWithValue("@Address", string.IsNullOrEmpty(address) ? (object)DBNull.Value : address);
+                    command.Parameters.AddWithValue("@Email", string.IsNullOrEmpty(email) ? (object)DBNull.Value : email);
+                    command.Parameters.AddWithValue("@PersonalID", personalId);
+
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                    connection.Close();
                 }
-
-                if (!string.IsNullOrEmpty(address))
-                {
-                    command.Parameters.AddWithValue("@Address", address);
-                }
-
-                if (!string.IsNullOrEmpty(email))
-                {
-                    command.Parameters.AddWithValue("@Email", email);
-                }
-
-                command.Parameters.AddWithValue("@PersonalID", personalId);
-
-                connection.Open();
-                command.ExecuteNonQuery();
-                connection.Close();
             }
 
 
