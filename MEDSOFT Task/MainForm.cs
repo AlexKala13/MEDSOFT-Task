@@ -9,189 +9,100 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SqlClient;
 using System.Configuration;
+using MEDSOFT_Task.Model;
 
 namespace MEDSOFT_Task
 {
     public partial class Main : Form
     {
-        string connectionString = ConfigurationManager.ConnectionStrings["MyConnectionString"].ConnectionString; // connection string-ის მიღება app.config ფაილიდან
-        SqlConnection connection;
-        SqlDataAdapter adapter;
-        DataTable dataTable;
+       
 
         public Main()
         {
             // მეთოდების გამოძახება
-            InitializeDatabase();
             InitializeComponent();
-            InitializeDataGridView();
-            LoadPatientsData();
         }
 
-        private void InitializeDatabase() // მონაცემთა ბაზასთან დაკავშირდება და მონაცემების წამოღება პროცედურის გამოყენებით
+        private void Main_Load(object sender, EventArgs e)
         {
-            connection = new SqlConnection(connectionString);
-            adapter = new SqlDataAdapter();
-            dataTable = new DataTable();
-
-            using (SqlCommand command = new SqlCommand("GetPatientsData", connection))
-            {
-                command.CommandType = CommandType.StoredProcedure;
-
-                adapter.SelectCommand = command;
-                adapter.Fill(dataTable);
-            }
+            LoadData();
         }
 
-
-        private void LoadPatientsData() // მონაცემთა ბაზიდან წამოღებული მონაცემებით ცხრილის შევსება
+        private void LoadData()
         {
-            patientsGridView.DataSource = dataTable;
+            dataGrid.DataSource = MainHandler.GetPatients();
+            gvPatients.BestFitColumns();
         }
-
-        private void InitializeDataGridView() // ცხრილის ინიციალიზირება (სვეტები)
-        {
-            DataGridViewTextBoxColumn idColumn = new DataGridViewTextBoxColumn();
-            idColumn.HeaderText = "ID";
-            idColumn.DataPropertyName = "ID";
-
-            DataGridViewTextBoxColumn nameColumn = new DataGridViewTextBoxColumn();
-            nameColumn.HeaderText = "პაციენტის გვარი სახელი";
-            nameColumn.DataPropertyName = "FullName";
-
-            DataGridViewTextBoxColumn birthDateColumn = new DataGridViewTextBoxColumn();
-            birthDateColumn.HeaderText = "დაბ. თარიღი";
-            birthDateColumn.DataPropertyName = "BirthDate";
-
-            DataGridViewTextBoxColumn genderColumn = new DataGridViewTextBoxColumn();
-            genderColumn.HeaderText = "სქესი";
-            genderColumn.DataPropertyName = "GenderName";
-
-            DataGridViewTextBoxColumn phoneColumn = new DataGridViewTextBoxColumn();
-            phoneColumn.HeaderText = "ტელეფონი";
-            phoneColumn.DataPropertyName = "Phone";
-
-            DataGridViewTextBoxColumn addressColummn = new DataGridViewTextBoxColumn();
-            addressColummn.HeaderText = "მისამართი";
-            addressColummn.DataPropertyName = "Address";
-
-            DataGridViewTextBoxColumn emailColumn = new DataGridViewTextBoxColumn();
-            emailColumn.HeaderText = "ელ. ფოსტა";
-            emailColumn.DataPropertyName = "Email";
-
-            DataGridViewTextBoxColumn personalIdColumn = new DataGridViewTextBoxColumn();
-            personalIdColumn.HeaderText = "პირადი ნომერი";
-            personalIdColumn.DataPropertyName = "PersonalId";
-
-            patientsGridView.Columns.Add(idColumn);
-            patientsGridView.Columns.Add(nameColumn);
-            patientsGridView.Columns.Add(birthDateColumn);
-            patientsGridView.Columns.Add(genderColumn);
-            patientsGridView.Columns.Add(phoneColumn);
-            patientsGridView.Columns.Add(addressColummn);
-            patientsGridView.Columns.Add(emailColumn);
-            patientsGridView.Columns.Add(personalIdColumn);
-
-            patientsGridView.CellFormatting += (sender, e) =>
-            {
-                if (e.ColumnIndex == patientsGridView.Columns[3].Index && e.Value != null)
-                {
-                    string gender = e.Value.ToString();
-                    if (gender == "Male")
-                    {
-                        e.Value = "მამრობითი";
-                    } else if (gender == "Female"){
-                        e.Value = "მდედრობითი";
-                    }
-                }
-            };
-            patientsGridView.AutoGenerateColumns = false;
-            patientsGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            patientsGridView.DataSource = dataTable;
-        }
-
-
-        // დამატების ფუნქცია
 
         private void addBtn_Click(object sender, EventArgs e)
         {
-            AddPatientForm addForm = new AddPatientForm();
-            if (addForm.ShowDialog() == DialogResult.OK) // პაციენტის დამატების ფანჯრის გახსნა
-            {
-                dataTable.Clear();
-                adapter.Fill(dataTable);
-                patientsGridView.DataSource = dataTable;
-            }
+            //AddEditForm addEditForm = new AddEditForm(null);
+            //if (addEditForm.ShowDialog() == DialogResult.OK) // არჩეული პაციენტის რედაქტირების ფანჯრის გახსნა
+            //{
+            //    dataTable.Clear();
+            //    adapter.Fill(dataTable);
+            //    dataGrid.DataSource = dataTable;
+            //}
         }
-
-
-        // რედაქტირების ფუნქცია
 
         private void editBtn_Click(object sender, EventArgs e)
         {
-            int selectedRowIndex = patientsGridView.SelectedCells[0].RowIndex;
-            if (!string.IsNullOrEmpty(patientsGridView.Rows[selectedRowIndex].Cells[0].Value?.ToString())) // შემოწმება არჩეულია თუ არა პაციენტი
-            {
-                int patientId = Convert.ToInt32(patientsGridView.Rows[selectedRowIndex].Cells[0].Value); // პაციენტის აიდის პოვნა
+            PatientModel model = new PatientModel();
+            model.ID = Convert.ToInt32(gvPatients.GetFocusedRowCellValue(colId).ToString());
+            model.FullName = gvPatients.GetFocusedRowCellValue(colFullName).ToString();
+            model.Phone = gvPatients.GetFocusedRowCellValue(colPhone).ToString();
+            model.personalId = gvPatients.GetFocusedRowCellValue(colPersonalId).ToString();
+            model.Email = gvPatients.GetFocusedRowCellValue(colEmail).ToString();
+            model.GenderName = gvPatients.GetFocusedRowCellValue(colGenderName).ToString();
+            model.BirthDate = Convert.ToDateTime(gvPatients.GetFocusedRowCellValue(colBirthDate).ToString());
+            model.Address = gvPatients.GetFocusedRowCellValue(colAddress).ToString();
 
-                EditPatientForm editForm = new EditPatientForm(patientId);
-                if (editForm.ShowDialog() == DialogResult.OK) // არჩეული პაციენტის რედაქტირების ფანჯრის გახსნა
-                {
-                    dataTable.Clear();
-                    adapter.Fill(dataTable);
-                    patientsGridView.DataSource = dataTable;
-                }
-            } else
+            AddEditForm addEditForm = new AddEditForm(model);
+            if (addEditForm.ShowDialog() == DialogResult.OK) // არჩეული პაციენტის რედაქტირების ფანჯრის გახსნა
             {
-                MessageBox.Show("აირჩიეთ პაციენტი!", "შეცდომა", MessageBoxButtons.OK); // პაციენტი არაა არჩეული
+                LoadData();
             }
         }
-        
-
-        // წაშლის ფუნქცია
 
         private void removeBtn_Click(object sender, EventArgs e)
         {
-            int selectedRowIndex = patientsGridView.SelectedCells[0].RowIndex; // არჩეული უჯრის მწკრივის ინდექსის პოვნა
+            //var patientId = gvPatients.GetFocusedRowCellValue(colId);
 
-            if (!string.IsNullOrEmpty(patientsGridView.Rows[selectedRowIndex].Cells[0].Value?.ToString())) // შემოწმება არჩეულია თუ არა პაციენტი
-            {
-                int patientId = Convert.ToInt32(patientsGridView.Rows[selectedRowIndex].Cells[0].Value); // პაციენტის აიდის პოვნა
+            //if (patientId != null) // შემოწმება არჩეულია თუ არა პაციენტი
+            //{
+            //    DialogResult result = MessageBox.Show($"გსურთ მონიშნული ჩანაწერის წაშლა?", "წაშლის დადასტურება",
+            //    MessageBoxButtons.YesNo,
+            //    MessageBoxIcon.Question);
 
-                DialogResult result = MessageBox.Show($"გსურთ მონიშნული ჩანაწერის წაშლა?", "წაშლის დადასტურება", 
-                    MessageBoxButtons.YesNo,
-                    MessageBoxIcon.Question);
+            //    if (result == DialogResult.Yes)
+            //    {
+            //        try
+            //        {
+            //            // მონაცემთა ბაზიდან პაციენტის ამოშლა პროცედურის გამოძახებით
+            //            using (SqlCommand command = new SqlCommand("DeletePatient", connection))
+            //            {
+            //                command.CommandType = CommandType.StoredProcedure;
+            //                command.Parameters.AddWithValue("@PatientID", patientId);
 
-                if (result == DialogResult.Yes)
-                {
-                    try
-                    {
-                        // მონაცემთა ბაზიდან პაციენტის ამოშლა პროცედურის გამოძახებით
-                        using (SqlCommand command = new SqlCommand("DeletePatient", connection))
-                        {
-                            command.CommandType = CommandType.StoredProcedure;
-                            command.Parameters.AddWithValue("@PatientID", patientId);
+            //                connection.Open();
+            //                command.ExecuteNonQuery();
+            //                connection.Close();
+            //            }
+            //            dataTable.Clear();
+            //            adapter.Fill(dataTable);
+            //            dataGrid.DataSource = dataTable;
+            //        }
+            //        catch (Exception ex)
+            //        {
+            //            MessageBox.Show($"წაშლა ვერ მოხერხდა!\n{ex}", "შეცდომა");
+            //        }
+            //    }
 
-                            connection.Open();
-                            command.ExecuteNonQuery();
-                            connection.Close();
-                        }
-
-                        dataTable.Rows.RemoveAt(selectedRowIndex);
-                        patientsGridView.DataSource = dataTable;
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show($"წაშლა ვერ მოხერხდა!\n{ex}", "შეცდომა");
-                    }
-                }
-
-            }
-            else
-            {
-                MessageBox.Show("აირჩიეთ პაციენტი!", "შეცდომა", MessageBoxButtons.OK); // პაციენტი არაა არჩეული
-            }
-            
+            //}
+            //else
+            //{
+            //    MessageBox.Show("აირჩიეთ პაციენტი!", "შეცდომა", MessageBoxButtons.OK); // პაციენტი არაა არჩეული
+            //}
         }
     }
 }
