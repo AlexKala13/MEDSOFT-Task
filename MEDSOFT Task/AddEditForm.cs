@@ -1,4 +1,5 @@
-﻿using MEDSOFT_Task.HelperMethods;
+﻿using MEDSOFT_Task.FormEventHandlers;
+using MEDSOFT_Task.HelperMethods;
 using MEDSOFT_Task.Model;
 using System;
 using System.Collections.Generic;
@@ -17,15 +18,6 @@ namespace MEDSOFT_Task
     public partial class AddEditForm : Form
     {
         PatientModel _model = new PatientModel();
-
-        public string name { get { return nameTb.Text; } set { nameTb.Text = value; } }
-        public string phoneNumber { get; set; }
-        public string address { get; set; }
-        public string email { get; set; }
-        public string personalId { get; set; }
-        public int genderID { get { return (int)genderCb.SelectedValue; } set { genderCb.SelectedValue = value; } }
-        public DateTime birthdate { get; set; }
-
         public AddEditForm()
         {
 
@@ -57,30 +49,31 @@ namespace MEDSOFT_Task
             }
         }
 
-        private void addEditBtn_Click(object sender, EventArgs e)
+        private void addEditBtn_Click(object sender, EventArgs e) // დამატება/რედაქტირების ღილაკი
         {
             if (ValidateData())
             {
-                address = addressTb.Text; // პაციენტის მისამართი
-                email = emailTb.Text; // პაციენტის ელ.ფოსტა
-
                 PatientModel model = new PatientModel();
-                if(_model != null)
+
+                if (_model != null)
                 {
                     model.ID = _model.ID;
-                } else
+                }
+                else
                 {
                     model.ID = 0;
                 }
-                model.FullName = name;
-                model.Email = email;
-                model.BirthDate = birthdate;
-                model.Address = address;
-                model.personalId = personalId;
+
+                model.FullName = nameTb.Text;
+                model.Email = emailTb.Text;
+                model.BirthDate = birthdatePicker.Value;
+                model.Address = addressTb.Text;
+                model.personalId = personalIdTb.Text;
+                model.Phone = phoneTb.Text;
                 model.GenderId = (int)genderCb.SelectedValue;
 
-                AddEditPatientHandler.PatientSet(_model);
-                
+                AddEditPatientHandler.PatientSet(model);
+
                 // პაციენტის რედაქტირების ფანჯრის ჩახურვა
 
                 this.DialogResult = DialogResult.OK;
@@ -88,22 +81,19 @@ namespace MEDSOFT_Task
             }
         }
 
-        private void cancelBtn_Click(object sender, EventArgs e)
+        private void cancelBtn_Click(object sender, EventArgs e) // გაუქმების ღილაკი
         {
             this.Close();
         }
 
-        private bool ValidateData()
+        private bool ValidateData() // დასამატებელი პაციენტის შეყვანილი მონაცემების ვალიდაცია
         {
-            int invalidDataCounter = 0; // არასწორად შეყვანილი მონაცემების მთვლელი ცვლადი
             bool result = true;
-
-            // დასამატებელი პაციენტის შეყვანილი მონაცემების ვალიდაცია //
 
             // სახელისა და გვარის ვალიდაცია
 
             if (!string.IsNullOrWhiteSpace(nameTb.Text))
-            { 
+            {
                 nameErrorLabel.Text = "";
             }
             else // თუ ველი არაა შევსებული
@@ -117,7 +107,6 @@ namespace MEDSOFT_Task
 
             if (birthdatePicker.Value != null && birthdatePicker.Value <= DateTime.Now)
             {
-                birthdate = birthdatePicker.Value;
                 birthDateErrorLabel.Text = "";
             }
             else if (birthdatePicker.Value != null && birthdatePicker.Value > DateTime.Now) // თუ შეყვანილი დაბადების თარიღი მომავალშია
@@ -151,7 +140,6 @@ namespace MEDSOFT_Task
             {
                 if (phoneTb.Text.Length == 9 && phoneTb.Text[0] == '5') // შეყვანილი ნომრის შემოწება (იწყება თუ არა 5-ზე და შეიცავს თუ არა 9 ციფრს)
                 {
-                    phoneNumber = phoneTb.Text;
                     phoneErrorLabel.Text = "";
                 }
                 else // თუ შეყვანილმა ნომერმა ვერ გაიარა შემოწმება
@@ -166,7 +154,6 @@ namespace MEDSOFT_Task
 
             if (!string.IsNullOrWhiteSpace(personalIdTb.Text) && personalIdTb.Text.Length == 11) // მომწმდება შეყვანილია თუ არა პირადი ნომერი და შეიცავს თუ არა 11 სიმბოლოს
             {
-                personalId = personalIdTb.Text;
                 pIdErrorLabel.Text = "";
             }
             else if (personalIdTb.Text != null && personalIdTb.Text.Length != 11) // თუ შეყვანილია, მაგრამ არ შეიცავს 11 სიმბოლოს

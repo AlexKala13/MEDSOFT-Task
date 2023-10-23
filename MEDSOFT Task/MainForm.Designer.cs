@@ -34,6 +34,8 @@
             this.addBtn = new System.Windows.Forms.ToolStripButton();
             this.editBtn = new System.Windows.Forms.ToolStripButton();
             this.removeBtn = new System.Windows.Forms.ToolStripButton();
+            this.printBtn = new System.Windows.Forms.ToolStripButton();
+            this.duplicateBtn = new System.Windows.Forms.ToolStripButton();
             this.dataGrid = new DevExpress.XtraGrid.GridControl();
             this.gvPatients = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.colId = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -64,7 +66,9 @@
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.addBtn,
             this.editBtn,
-            this.removeBtn});
+            this.removeBtn,
+            this.printBtn,
+            this.duplicateBtn});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(923, 25);
@@ -102,6 +106,27 @@
             this.removeBtn.Text = "წაშლა";
             this.removeBtn.Click += new System.EventHandler(this.removeBtn_Click);
             // 
+            // printBtn
+            // 
+            this.printBtn.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.printBtn.Image = ((System.Drawing.Image)(resources.GetObject("printBtn.Image")));
+            this.printBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.printBtn.Name = "printBtn";
+            this.printBtn.Size = new System.Drawing.Size(69, 22);
+            this.printBtn.Tag = "";
+            this.printBtn.Text = "ბეჭდვა";
+            this.printBtn.Click += new System.EventHandler(this.printBtn_Click);
+            // 
+            // duplicateBtn
+            // 
+            this.duplicateBtn.Image = ((System.Drawing.Image)(resources.GetObject("duplicateBtn.Image")));
+            this.duplicateBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.duplicateBtn.Name = "duplicateBtn";
+            this.duplicateBtn.Size = new System.Drawing.Size(103, 22);
+            this.duplicateBtn.Tag = "";
+            this.duplicateBtn.Text = "დუბლირება";
+            this.duplicateBtn.Click += new System.EventHandler(this.duplicateBtn_Click);
+            // 
             // dataGrid
             // 
             this.dataGrid.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -126,6 +151,7 @@
             this.colPersonalId});
             this.gvPatients.GridControl = this.dataGrid;
             this.gvPatients.Name = "gvPatients";
+            this.gvPatients.OptionsSelection.MultiSelect = true;
             // 
             // colId
             // 
@@ -240,6 +266,8 @@
         private System.Windows.Forms.ToolStripButton addBtn;
         private System.Windows.Forms.ToolStripButton editBtn;
         private System.Windows.Forms.ToolStripButton removeBtn;
+        private System.Windows.Forms.ToolStripButton printBtn;
+        private System.Windows.Forms.ToolStripButton duplicateBtn;
     }
 }
 
