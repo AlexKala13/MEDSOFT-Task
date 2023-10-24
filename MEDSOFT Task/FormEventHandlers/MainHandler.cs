@@ -51,7 +51,7 @@ namespace MEDSOFT_Task
             }
         }
 
-        public static DataTable PatientDSFill(int patientId)
+        public static DataSet PatientDSFill(int patientId)
         {
             var dataSet = new PatientDataSet();
 
@@ -60,10 +60,12 @@ namespace MEDSOFT_Task
                 dataAdapter.SelectCommand.CommandType = CommandType.StoredProcedure;
                 dataAdapter.SelectCommand.Parameters.AddWithValue("@PatientID", patientId);
 
-                dataAdapter.Fill(dataSet.PatientDataTable);
+                dataAdapter.TableMappings.Add("Table", "PatientDataTable");
+                dataAdapter.TableMappings.Add("Table1", "AllPatientsDataTable");
+                dataAdapter.Fill(dataSet);
             }
 
-            return dataSet.PatientDataTable;
+            return dataSet;
         }
 
         public static void Duplicate(int patientId)

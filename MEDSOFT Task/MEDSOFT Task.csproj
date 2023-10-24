@@ -73,16 +73,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AddEditForm.cs">
+    <Compile Include="frmAddEdit.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AddEditForm.Designer.cs">
-      <DependentUpon>AddEditForm.cs</DependentUpon>
+    <Compile Include="frmAddEdit.Designer.cs">
+      <DependentUpon>frmAddEdit.cs</DependentUpon>
     </Compile>
     <Compile Include="FormEventHandlers\AddEditPatientHandler.cs" />
-    <Compile Include="Prints\PatientDataSet.cs">
-      <DependentUpon>PatientDataSet.xsd</DependentUpon>
-    </Compile>
     <Compile Include="Prints\PatientDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -96,24 +93,24 @@
     </Compile>
     <Compile Include="HelperMethods\DatabaseAccess.cs" />
     <Compile Include="HelperMethods\CbFillClass.cs" />
-    <Compile Include="MainForm.cs">
+    <Compile Include="frmMain.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MainForm.Designer.cs">
-      <DependentUpon>MainForm.cs</DependentUpon>
+    <Compile Include="frmMain.Designer.cs">
+      <DependentUpon>frmMain.cs</DependentUpon>
     </Compile>
     <Compile Include="FormEventHandlers\MainHandler.cs" />
     <Compile Include="Model\PatientModel.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="AddEditForm.resx">
-      <DependentUpon>AddEditForm.cs</DependentUpon>
+    <EmbeddedResource Include="frmAddEdit.resx">
+      <DependentUpon>frmAddEdit.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Prints\XtraReport1.resx">
       <DependentUpon>XtraReport1.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MainForm.resx">
-      <DependentUpon>MainForm.cs</DependentUpon>
+    <EmbeddedResource Include="frmMain.resx">
+      <DependentUpon>frmMain.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="Properties\Resources.resx">

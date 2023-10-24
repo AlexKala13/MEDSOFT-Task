@@ -22,9 +22,6 @@ namespace MEDSOFT_Task.HelperMethods
                 comboBox.DataSource = dataTable;
                 comboBox.DisplayMember = "GenderName";
                 comboBox.ValueMember = "GenderID";
-
-                //dataAdapter.SelectCommand.Connection.Open();
-                //dataAdapter.SelectCommand.Connection.Close();
             }
         }
     }
