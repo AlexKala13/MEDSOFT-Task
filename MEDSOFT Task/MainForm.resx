@@ -156,6 +156,33 @@
         b0Uj5gb04QvsGvbl9+TRT0OsNJ51LCNohhU+c5XZG6vypKW/hsgPjSq072DAsrsAAAAASUVORK5CYII=
 </value>
   </data>
+  <data name="printBtn.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAKsSURBVGhD7ZpNbhNBEIVb0w03AME9EAtgBZtELNlwEbhB
+        +DkCiR1HZMdxYMGGVYK5QBASSBCqzKtRpqc7XdNTM2bhTyrZXfPqVVc8nlgeux1XWHm/R3FOcTkwzij2
+        YLN9sKHURjVxBptp+ODczWPv31J8SzRPBkrVpDwysaZ9vOY9oVQPFb+JzIqBUjUpj0K8QqkeKlpz8XEI
+        D5DKIo2wVKOtW4XwENo1Unq0TZgh2qvM0aNXKOvrAlI1KY84IJ13kCkC7e0HwbID5Z8svP8iGm1wDV2N
+        HsOmg2iwnGeQKTDrb2ZUiVl/M6NKzPprjSQ/NmDXEudzuiJaI8mPDdi1xPmcroiZUSVm/c2MKjHrb2ZU
+        iVl/rZHkxwbsWuJ8TldEayT5sQG7ljif0xUxM6rErL+ZUSVm/c2MKjHrrzWSfC4gG0xcX+2nNZJ8LiAb
+        TFxf7WdmVIlZfzOjSsz6mxlVYtbfzKgAeT498v4rPZ6feL+P9PYHIU1yYzlYJ94U7denksNS3b9HrRFp
+        khtL8c65G6S5SOklh+W8g7x37vah9z9Fy885h8M9lt4fQveHHjvfzIsHlvMNwhteNc0n6H4hLjmXGoby
+        L/k4nYY/TkK4j3QLfOYdZOncLdrYRz6+8P7zyrk7ce7UubuQs9czit+bV6JpniPdges4sJx+kNQQONQ7
+        xsMsQrhHA3zf+DXNC0h7xP3itZqSET2Xq9O1p1DilNv48PsDkiSiw3LSQdqrU+lNzcdYI3qKC75i4XAS
+        0WI5zyAUxdtnFfq4X2etpmTE/+xozZtT3dAcqifNPINMjVl/M6NKzPqbGVVi1j9nNHeg/W6Q+sKJGDPI
+        5j473+NGamssQ3jEe+FPEkjp4Z9MyF/hP4oDbE8PfovCw/x7ZbYY+Ex3UPVblB1bwbm/9dri2EAUE9kA
+        AAAASUVORK5CYII=
+</value>
+  </data>
+  <data name="duplicateBtn.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAACVSURBVEhL3ZRBDoAgDAR5nsb/f0D9hy6HGgNOSolcmGQP
+        MFtIOJCm5urMoayKy9dwa3ZlGHbJMPCCTTkVK7SmfHPbr8jF92Ak7ze3vQoUDuUcnoPCoZzDc1CIiMMu
+        ChFx2EUhIg67VKQY3vqBihTDWz+gEBGHXRQi4rCLQkQcdlE4NM8Nv+Cvzw7JX27PJfnwRZmSlG5cjsKR
+        TEFLYwAAAABJRU5ErkJggg==
+</value>
+  </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         AAABAAQAEBAAAAEAIABoBAAARgAAABgYAAABACAAiAkAAK4EAAAgIAAAAQAgAKgQAAA2DgAAMDAAAAEA
