@@ -14,7 +14,7 @@ namespace MEDSOFT_Task.HelperMethods
         public static void InitializeCb(ComboBox comboBox)
         {
             DataTable dataTable = new DataTable();
-            using (SqlDataAdapter dataAdapter = new SqlDataAdapter("GetGenders", DatabaseAccess.Connect()))
+            using (SqlDataAdapter dataAdapter = new SqlDataAdapter("Genders_Get", DatabaseAccess.Connect()))
             {
                 dataAdapter.SelectCommand.CommandType = CommandType.StoredProcedure;
                 dataAdapter.Fill(dataTable);

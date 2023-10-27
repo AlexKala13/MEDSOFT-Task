@@ -15,7 +15,7 @@ namespace MEDSOFT_Task
         {
             int result = 0;
 
-            using (SqlCommand command = new SqlCommand("SetPatient", DatabaseAccess.Connect()))
+            using (SqlCommand command = new SqlCommand("Patient_Set", DatabaseAccess.Connect()))
             {
                 command.CommandType = CommandType.StoredProcedure;
 
@@ -34,6 +34,21 @@ namespace MEDSOFT_Task
             }
 
             return result;
+        }
+
+        public static DataTable PatientGet(int patientId)
+        {
+            DataTable dataTable = new DataTable();
+
+            using (SqlDataAdapter dataAdapter = new SqlDataAdapter("Patient_GetOne", DatabaseAccess.Connect()))
+            {
+                dataAdapter.SelectCommand.CommandType = CommandType.StoredProcedure;
+                dataAdapter.SelectCommand.Parameters.AddWithValue("@PatientID", patientId);
+
+                dataAdapter.Fill(dataTable);
+            }
+
+            return dataTable;
         }
     }
 }

@@ -17,15 +17,14 @@ namespace MEDSOFT_Task
 {
     public partial class frmAddEdit : Form
     {
-        PatientModel _model = new PatientModel();
-        public frmAddEdit()
-        {
+        /// <summary>
+        /// არჩეული პაციენტის ID
+        /// </summary>
+        public int PatientId { get; set; }
 
-        }
-
-        public frmAddEdit(PatientModel model)
+        public frmAddEdit(int patientId)
         {
-            _model = model;
+            PatientId = patientId;
             InitializeComponent();
             InitializeComboBox();
             LoadPatientData();
@@ -38,25 +37,19 @@ namespace MEDSOFT_Task
 
         private void AddEditForm_Load(object sender, EventArgs e)
         {
-            LoadPatientData();
         }
 
-        private void LoadPatientData()
+        private void LoadPatientData() // პაციენტის მონაცემების არსებობის შემთხვევაში input-ების შევსება
         {
-            if (_model != null) // თუ იყო არჩეული რედაქტირება იმ შემთხვევაში ხდება ტექსტბოქსების შევსება პაციენტის მონაცემებით
-            {
-                tbName.Text = _model.FullName;
-                pickerBirthDate.Value = _model.BirthDate;
-                tbPhone.Text = _model.Phone;
-                tbAddress.Text = _model.Address;
-                tbEmail.Text = _model.Email;
-                cbGender.SelectedValue = _model.GenderId;
-                tbPersonalID.Text = _model.personalId;
-            }
-            else
-            {
-                cbGender.SelectedValue = null;
-            }
+            DataTable patientData = AddEditPatientHandler.PatientGet(PatientId);
+
+            tbName.Text = patientData.Rows[0]["FullName"].ToString();
+            pickerBirthDate.Value = Convert.ToDateTime(patientData.Rows[0]["BirthDate"]);
+            cbGender.SelectedValue = Convert.ToInt32(patientData.Rows[0]["GenderID"]);
+            tbPhone.Text = patientData.Rows[0]["Phone"].ToString();
+            tbAddress.Text = patientData.Rows[0]["Address"].ToString();
+            tbEmail.Text = patientData.Rows[0]["Email"].ToString();
+            tbPersonalID.Text = patientData.Rows[0]["PersonalID"].ToString();
         }
 
         private bool ValidateData() // დასამატებელი პაციენტის შეყვანილი მონაცემების ვალიდაცია
@@ -145,18 +138,9 @@ namespace MEDSOFT_Task
 
         private void btnAddEdit_Click(object sender, EventArgs e) // დამატება/რედაქტირების ღილაკი
         {
-            if (ValidateData())
+            if (ValidateData()) // დამატება/რედაქტირებამდე ვატარებთ შეყვანილი მონაცემების ვალიდაციას
             {
-                PatientModel model = new PatientModel();
-
-                if (_model != null)
-                {
-                    model.ID = _model.ID;
-                }
-                else
-                {
-                    model.ID = 0;
-                }
+                PatientModel model = new PatientModel(); // ვქმნით პაციენტის მოდელს და ვანიჭებთ მის ველებს შეყვანილი მონაცემების მნიშვნელობებს
 
                 model.FullName = tbName.Text;
                 model.Email = tbEmail.Text;

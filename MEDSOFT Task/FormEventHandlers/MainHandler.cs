@@ -16,7 +16,7 @@ namespace MEDSOFT_Task
         {
             DataTable dataTable = new DataTable();
 
-            using (SqlDataAdapter dataAdapter = new SqlDataAdapter("GetPatientsData", DatabaseAccess.Connect()))
+            using (SqlDataAdapter dataAdapter = new SqlDataAdapter("Patient_GetList", DatabaseAccess.Connect()))
             {
                 dataAdapter.SelectCommand.CommandType = CommandType.StoredProcedure;
 
@@ -40,7 +40,7 @@ namespace MEDSOFT_Task
             {
                 connection.Open();
 
-                using (SqlCommand command = new SqlCommand("DeletePatients", connection))
+                using (SqlCommand command = new SqlCommand("Patients_Delete", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
                     command.Parameters.AddWithValue("@PatientIDs", table);
@@ -55,7 +55,7 @@ namespace MEDSOFT_Task
         {
             var dataSet = new PatientDataSet();
 
-            using (SqlDataAdapter dataAdapter = new SqlDataAdapter("GetPatient", DatabaseAccess.Connect()))
+            using (SqlDataAdapter dataAdapter = new SqlDataAdapter("Patient_Print", DatabaseAccess.Connect()))
             {
                 dataAdapter.SelectCommand.CommandType = CommandType.StoredProcedure;
                 dataAdapter.SelectCommand.Parameters.AddWithValue("@PatientID", patientId);
@@ -70,7 +70,7 @@ namespace MEDSOFT_Task
 
         public static void Duplicate(int patientId)
         {
-            using (SqlCommand command = new SqlCommand("DuplicatePatient", DatabaseAccess.Connect()))
+            using (SqlCommand command = new SqlCommand("Patient_Duplicate", DatabaseAccess.Connect()))
             {
                 command.CommandType = CommandType.StoredProcedure;
 

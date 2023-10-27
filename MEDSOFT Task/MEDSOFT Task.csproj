@@ -80,6 +80,7 @@
       <DependentUpon>frmAddEdit.cs</DependentUpon>
     </Compile>
     <Compile Include="FormEventHandlers\AddEditPatientHandler.cs" />
+    <Compile Include="Models\PatientModel.cs" />
     <Compile Include="Prints\PatientDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -100,7 +101,6 @@
       <DependentUpon>frmMain.cs</DependentUpon>
     </Compile>
     <Compile Include="FormEventHandlers\MainHandler.cs" />
-    <Compile Include="Model\PatientModel.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="frmAddEdit.resx">

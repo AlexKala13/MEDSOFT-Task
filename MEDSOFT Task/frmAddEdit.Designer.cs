@@ -152,7 +152,7 @@ namespace MEDSOFT_Task
             // 
             this.pickerBirthDate.CustomFormat = "dd/MM/yyyy";
             this.pickerBirthDate.Font = new System.Drawing.Font("Sylfaen", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.pickerBirthDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.pickerBirthDate.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.pickerBirthDate.Location = new System.Drawing.Point(423, 39);
             this.pickerBirthDate.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.pickerBirthDate.Name = "pickerBirthDate";
