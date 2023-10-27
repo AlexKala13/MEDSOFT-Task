@@ -30,7 +30,7 @@ namespace MEDSOFT_Task
 
         private void addBtn_Click(object sender, EventArgs e)
         {
-            AddEditForm addEditForm = new AddEditForm(null);
+            frmAddEdit addEditForm = new frmAddEdit(null);
             if (addEditForm.ShowDialog() == DialogResult.OK) // არჩეული პაციენტის რედაქტირების ფანჯრის გახსნა
             {
                 LoadData();
@@ -41,17 +41,28 @@ namespace MEDSOFT_Task
         {
             if (gvPatients.SelectedRowsCount == 1)
             {
+                string patientGender = gvPatients.GetFocusedRowCellValue(colGenderName).ToString();
+                int genderId = 0;
+                if(patientGender == "მამრობითი")
+                {
+                    genderId = 1;
+                } else if (patientGender == "მდედრობითი")
+                {
+                    genderId = 2;
+                }
+
                 PatientModel model = new PatientModel();
                 model.ID = Convert.ToInt32(gvPatients.GetFocusedRowCellValue(colId).ToString());
                 model.FullName = gvPatients.GetFocusedRowCellValue(colFullName).ToString();
                 model.Phone = gvPatients.GetFocusedRowCellValue(colPhone).ToString();
                 model.personalId = gvPatients.GetFocusedRowCellValue(colPersonalId).ToString();
                 model.Email = gvPatients.GetFocusedRowCellValue(colEmail).ToString();
-                model.GenderName = gvPatients.GetFocusedRowCellValue(colGenderName).ToString();
+                model.GenderName = patientGender;
+                model.GenderId = genderId;
                 model.BirthDate = Convert.ToDateTime(gvPatients.GetFocusedRowCellValue(colBirthDate).ToString());
                 model.Address = gvPatients.GetFocusedRowCellValue(colAddress).ToString();
 
-                AddEditForm addEditForm = new AddEditForm(model);
+                frmAddEdit addEditForm = new frmAddEdit(model);
                 if (addEditForm.ShowDialog() == DialogResult.OK) // არჩეული პაციენტის რედაქტირების ფანჯრის გახსნა
                 {
                     LoadData();
@@ -101,6 +112,7 @@ namespace MEDSOFT_Task
                 var print = new XtraReport1();
                 print.DataSource = MainHandler.PatientDSFill(selectedPatient);
                 print.ShowRibbonPreviewDialog();
+                
             }
             else
             {

@@ -29,6 +29,7 @@ namespace MEDSOFT_Task.FormEventHandlers
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(XtraReport1));
             this.TopMargin = new DevExpress.XtraReports.UI.TopMarginBand();
             this.BottomMargin = new DevExpress.XtraReports.UI.BottomMarginBand();
             this.Detail = new DevExpress.XtraReports.UI.DetailBand();
@@ -50,12 +51,39 @@ namespace MEDSOFT_Task.FormEventHandlers
             this.xrHeader = new DevExpress.XtraReports.UI.XRLabel();
             this.DetailReport = new DevExpress.XtraReports.UI.DetailReportBand();
             this.Detail1 = new DevExpress.XtraReports.UI.DetailBand();
+            this.xrLabel1 = new DevExpress.XtraReports.UI.XRLabel();
             this.xrTable1 = new DevExpress.XtraReports.UI.XRTable();
             this.xrTableRow1 = new DevExpress.XtraReports.UI.XRTableRow();
+            this.ID = new DevExpress.XtraReports.UI.XRTableCell();
+            this.FullName = new DevExpress.XtraReports.UI.XRTableCell();
+            this.BirthDate = new DevExpress.XtraReports.UI.XRTableCell();
+            this.PatientGender = new DevExpress.XtraReports.UI.XRTableCell();
+            this.Phone = new DevExpress.XtraReports.UI.XRTableCell();
+            this.Address = new DevExpress.XtraReports.UI.XRTableCell();
+            this.Email = new DevExpress.XtraReports.UI.XRTableCell();
+            this.PersonalID = new DevExpress.XtraReports.UI.XRTableCell();
+            this.xrTable2 = new DevExpress.XtraReports.UI.XRTable();
+            this.xrTableRow3 = new DevExpress.XtraReports.UI.XRTableRow();
             this.xrTableCell1 = new DevExpress.XtraReports.UI.XRTableCell();
             this.xrTableCell2 = new DevExpress.XtraReports.UI.XRTableCell();
             this.xrTableCell3 = new DevExpress.XtraReports.UI.XRTableCell();
+            this.xrTableCell4 = new DevExpress.XtraReports.UI.XRTableCell();
+            this.xrTableCell5 = new DevExpress.XtraReports.UI.XRTableCell();
+            this.xrTableCell6 = new DevExpress.XtraReports.UI.XRTableCell();
+            this.xrTableCell7 = new DevExpress.XtraReports.UI.XRTableCell();
+            this.xrTableCell8 = new DevExpress.XtraReports.UI.XRTableCell();
+            this.DetailReport1 = new DevExpress.XtraReports.UI.DetailReportBand();
+            this.Detail2 = new DevExpress.XtraReports.UI.DetailBand();
+            this.patientDataSet1 = new MEDSOFT_Task.Prints.PatientDataSet();
+            this.patientDataSet2 = new MEDSOFT_Task.Prints.PatientDataSet();
+            this.patientDataSet3 = new MEDSOFT_Task.Prints.PatientDataSet();
+            this.patientDataSet4 = new MEDSOFT_Task.Prints.PatientDataSet();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.xrTable2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.patientDataSet1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.patientDataSet2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.patientDataSet3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.patientDataSet4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
             // 
             // TopMargin
@@ -259,7 +287,7 @@ namespace MEDSOFT_Task.FormEventHandlers
             this.xrFullNameHeader.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
             this.xrFullNameHeader.SizeF = new System.Drawing.SizeF(200F, 23F);
             this.xrFullNameHeader.StylePriority.UseFont = false;
-            this.xrFullNameHeader.Text = "სახელი / გვარი";
+            this.xrFullNameHeader.Text = "გვარი / სახელი";
             // 
             // xrHeader
             // 
@@ -286,47 +314,245 @@ namespace MEDSOFT_Task.FormEventHandlers
             // Detail1
             // 
             this.Detail1.Controls.AddRange(new DevExpress.XtraReports.UI.XRControl[] {
+            this.xrLabel1,
             this.xrTable1});
+            this.Detail1.HeightF = 50F;
             this.Detail1.Name = "Detail1";
+            // 
+            // xrLabel1
+            // 
+            this.xrLabel1.LocationFloat = new DevExpress.Utils.PointFloat(243.6821F, 2.000014F);
+            this.xrLabel1.Multiline = true;
+            this.xrLabel1.Name = "xrLabel1";
+            this.xrLabel1.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
+            this.xrLabel1.SizeF = new System.Drawing.SizeF(213.5417F, 23F);
+            this.xrLabel1.Text = "პაციენტების ცხრილი";
             // 
             // xrTable1
             // 
-            this.xrTable1.LocationFloat = new DevExpress.Utils.PointFloat(25F, 11.51803F);
+            this.xrTable1.LocationFloat = new DevExpress.Utils.PointFloat(0F, 25F);
             this.xrTable1.Name = "xrTable1";
             this.xrTable1.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 96F);
             this.xrTable1.Rows.AddRange(new DevExpress.XtraReports.UI.XRTableRow[] {
             this.xrTableRow1});
-            this.xrTable1.SizeF = new System.Drawing.SizeF(598.9583F, 25F);
+            this.xrTable1.SizeF = new System.Drawing.SizeF(650F, 25F);
             // 
             // xrTableRow1
             // 
             this.xrTableRow1.Cells.AddRange(new DevExpress.XtraReports.UI.XRTableCell[] {
+            this.ID,
+            this.FullName,
+            this.BirthDate,
+            this.PatientGender,
+            this.Phone,
+            this.Address,
+            this.Email,
+            this.PersonalID});
+            this.xrTableRow1.Name = "xrTableRow1";
+            this.xrTableRow1.Weight = 0.5D;
+            // 
+            // ID
+            // 
+            this.ID.Font = new System.Drawing.Font("Arial", 7F, System.Drawing.FontStyle.Bold);
+            this.ID.Multiline = true;
+            this.ID.Name = "ID";
+            this.ID.StylePriority.UseFont = false;
+            this.ID.Text = "ID";
+            this.ID.Weight = 1D;
+            // 
+            // FullName
+            // 
+            this.FullName.Font = new System.Drawing.Font("Arial", 7F, System.Drawing.FontStyle.Bold);
+            this.FullName.Multiline = true;
+            this.FullName.Name = "FullName";
+            this.FullName.StylePriority.UseFont = false;
+            this.FullName.Text = "სახელი გვარი";
+            this.FullName.Weight = 1D;
+            // 
+            // BirthDate
+            // 
+            this.BirthDate.Font = new System.Drawing.Font("Arial", 7F, System.Drawing.FontStyle.Bold);
+            this.BirthDate.Multiline = true;
+            this.BirthDate.Name = "BirthDate";
+            this.BirthDate.StylePriority.UseFont = false;
+            this.BirthDate.Text = "დაბ. თარიღი";
+            this.BirthDate.Weight = 1D;
+            // 
+            // PatientGender
+            // 
+            this.PatientGender.Font = new System.Drawing.Font("Arial", 7F, System.Drawing.FontStyle.Bold);
+            this.PatientGender.Multiline = true;
+            this.PatientGender.Name = "PatientGender";
+            this.PatientGender.StylePriority.UseFont = false;
+            this.PatientGender.Text = "სქესი";
+            this.PatientGender.Weight = 1D;
+            // 
+            // Phone
+            // 
+            this.Phone.Font = new System.Drawing.Font("Arial", 7F, System.Drawing.FontStyle.Bold);
+            this.Phone.Multiline = true;
+            this.Phone.Name = "Phone";
+            this.Phone.StylePriority.UseFont = false;
+            this.Phone.Text = "ტელეფონი";
+            this.Phone.Weight = 1D;
+            // 
+            // Address
+            // 
+            this.Address.Font = new System.Drawing.Font("Arial", 7F, System.Drawing.FontStyle.Bold);
+            this.Address.Multiline = true;
+            this.Address.Name = "Address";
+            this.Address.StylePriority.UseFont = false;
+            this.Address.Text = "მისამართი";
+            this.Address.Weight = 1D;
+            // 
+            // Email
+            // 
+            this.Email.Font = new System.Drawing.Font("Arial", 7F, System.Drawing.FontStyle.Bold);
+            this.Email.Multiline = true;
+            this.Email.Name = "Email";
+            this.Email.StylePriority.UseFont = false;
+            this.Email.Text = "ელ. ფოსტა";
+            this.Email.Weight = 1D;
+            // 
+            // PersonalID
+            // 
+            this.PersonalID.Font = new System.Drawing.Font("Arial", 7F, System.Drawing.FontStyle.Bold);
+            this.PersonalID.Multiline = true;
+            this.PersonalID.Name = "PersonalID";
+            this.PersonalID.StylePriority.UseFont = false;
+            this.PersonalID.Text = "პირადი ნომერი";
+            this.PersonalID.Weight = 1D;
+            // 
+            // xrTable2
+            // 
+            this.xrTable2.LocationFloat = new DevExpress.Utils.PointFloat(0F, 0F);
+            this.xrTable2.Name = "xrTable2";
+            this.xrTable2.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 96F);
+            this.xrTable2.Rows.AddRange(new DevExpress.XtraReports.UI.XRTableRow[] {
+            this.xrTableRow3});
+            this.xrTable2.SizeF = new System.Drawing.SizeF(650F, 25F);
+            // 
+            // xrTableRow3
+            // 
+            this.xrTableRow3.Cells.AddRange(new DevExpress.XtraReports.UI.XRTableCell[] {
             this.xrTableCell1,
             this.xrTableCell2,
-            this.xrTableCell3});
-            this.xrTableRow1.Name = "xrTableRow1";
-            this.xrTableRow1.Weight = 1D;
+            this.xrTableCell3,
+            this.xrTableCell4,
+            this.xrTableCell5,
+            this.xrTableCell6,
+            this.xrTableCell7,
+            this.xrTableCell8});
+            this.xrTableRow3.Name = "xrTableRow3";
+            this.xrTableRow3.Weight = 1D;
             // 
             // xrTableCell1
             // 
+            this.xrTableCell1.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[ID]")});
             this.xrTableCell1.Multiline = true;
             this.xrTableCell1.Name = "xrTableCell1";
             this.xrTableCell1.Text = "xrTableCell1";
-            this.xrTableCell1.Weight = 1D;
+            this.xrTableCell1.Weight = 0.8125D;
             // 
             // xrTableCell2
             // 
+            this.xrTableCell2.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[FullName]")});
             this.xrTableCell2.Multiline = true;
             this.xrTableCell2.Name = "xrTableCell2";
             this.xrTableCell2.Text = "xrTableCell2";
-            this.xrTableCell2.Weight = 1D;
+            this.xrTableCell2.Weight = 0.8125D;
             // 
             // xrTableCell3
             // 
+            this.xrTableCell3.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[BirthDate]")});
             this.xrTableCell3.Multiline = true;
             this.xrTableCell3.Name = "xrTableCell3";
             this.xrTableCell3.Text = "xrTableCell3";
-            this.xrTableCell3.Weight = 1D;
+            this.xrTableCell3.TextFormatString = "{0:dd/MM/yyyy}";
+            this.xrTableCell3.Weight = 0.8125D;
+            // 
+            // xrTableCell4
+            // 
+            this.xrTableCell4.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[PatientGender]")});
+            this.xrTableCell4.Multiline = true;
+            this.xrTableCell4.Name = "xrTableCell4";
+            this.xrTableCell4.Text = "xrTableCell4";
+            this.xrTableCell4.Weight = 0.8125D;
+            // 
+            // xrTableCell5
+            // 
+            this.xrTableCell5.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[Phone]")});
+            this.xrTableCell5.Multiline = true;
+            this.xrTableCell5.Name = "xrTableCell5";
+            this.xrTableCell5.Text = "xrTableCell5";
+            this.xrTableCell5.Weight = 0.8125D;
+            // 
+            // xrTableCell6
+            // 
+            this.xrTableCell6.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[Address]")});
+            this.xrTableCell6.Multiline = true;
+            this.xrTableCell6.Name = "xrTableCell6";
+            this.xrTableCell6.Text = "xrTableCell6";
+            this.xrTableCell6.Weight = 0.8106893920898437D;
+            // 
+            // xrTableCell7
+            // 
+            this.xrTableCell7.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[Email]")});
+            this.xrTableCell7.Multiline = true;
+            this.xrTableCell7.Name = "xrTableCell7";
+            this.xrTableCell7.Text = "xrTableCell7";
+            this.xrTableCell7.Weight = 0.81431060791015619D;
+            // 
+            // xrTableCell8
+            // 
+            this.xrTableCell8.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[PersonalID]")});
+            this.xrTableCell8.Multiline = true;
+            this.xrTableCell8.Name = "xrTableCell8";
+            this.xrTableCell8.Text = "xrTableCell8";
+            this.xrTableCell8.Weight = 0.81431060791015619D;
+            // 
+            // DetailReport1
+            // 
+            this.DetailReport1.Bands.AddRange(new DevExpress.XtraReports.UI.Band[] {
+            this.Detail2});
+            this.DetailReport1.DataMember = "AllPatientsDataTable";
+            this.DetailReport1.Level = 1;
+            this.DetailReport1.Name = "DetailReport1";
+            // 
+            // Detail2
+            // 
+            this.Detail2.Controls.AddRange(new DevExpress.XtraReports.UI.XRControl[] {
+            this.xrTable2});
+            this.Detail2.HeightF = 25F;
+            this.Detail2.Name = "Detail2";
+            // 
+            // patientDataSet1
+            // 
+            this.patientDataSet1.DataSetName = "PatientDataSet";
+            this.patientDataSet1.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+            // 
+            // patientDataSet2
+            // 
+            this.patientDataSet2.DataSetName = "PatientDataSet";
+            this.patientDataSet2.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+            // 
+            // patientDataSet3
+            // 
+            this.patientDataSet3.DataSetName = "PatientDataSet";
+            this.patientDataSet3.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+            // 
+            // patientDataSet4
+            // 
+            this.patientDataSet4.DataSetName = "PatientDataSet";
+            this.patientDataSet4.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
             // 
             // XtraReport1
             // 
@@ -334,12 +560,23 @@ namespace MEDSOFT_Task.FormEventHandlers
             this.TopMargin,
             this.BottomMargin,
             this.Detail,
-            this.DetailReport});
-            this.DataSourceSchema = null;
+            this.DetailReport,
+            this.DetailReport1});
+            this.ComponentStorage.AddRange(new System.ComponentModel.IComponent[] {
+            this.patientDataSet1,
+            this.patientDataSet2,
+            this.patientDataSet3,
+            this.patientDataSet4});
+            this.DataSourceSchema = resources.GetString("$this.DataSourceSchema");
             this.Font = new System.Drawing.Font("Arial", 9.75F);
             this.Margins = new System.Drawing.Printing.Margins(100, 100, 51, 100);
             this.Version = "21.2";
             ((System.ComponentModel.ISupportInitialize)(this.xrTable1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.xrTable2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.patientDataSet1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.patientDataSet2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.patientDataSet3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.patientDataSet4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this)).EndInit();
 
         }
@@ -369,8 +606,30 @@ namespace MEDSOFT_Task.FormEventHandlers
         private DevExpress.XtraReports.UI.DetailBand Detail1;
         private DevExpress.XtraReports.UI.XRTable xrTable1;
         private DevExpress.XtraReports.UI.XRTableRow xrTableRow1;
+        private DevExpress.XtraReports.UI.XRTableCell ID;
+        private DevExpress.XtraReports.UI.XRTableCell FullName;
+        private DevExpress.XtraReports.UI.XRTableCell BirthDate;
+        private DevExpress.XtraReports.UI.XRTableCell PatientGender;
+        private DevExpress.XtraReports.UI.XRTableCell Phone;
+        private DevExpress.XtraReports.UI.XRTableCell Address;
+        private DevExpress.XtraReports.UI.XRTableCell Email;
+        private DevExpress.XtraReports.UI.XRTableCell PersonalID;
+        private DevExpress.XtraReports.UI.XRLabel xrLabel1;
+        private Prints.PatientDataSet patientDataSet2;
+        private Prints.PatientDataSet patientDataSet1;
+        private Prints.PatientDataSet patientDataSet3;
+        private Prints.PatientDataSet patientDataSet4;
+        private DevExpress.XtraReports.UI.XRTable xrTable2;
+        private DevExpress.XtraReports.UI.XRTableRow xrTableRow3;
         private DevExpress.XtraReports.UI.XRTableCell xrTableCell1;
         private DevExpress.XtraReports.UI.XRTableCell xrTableCell2;
         private DevExpress.XtraReports.UI.XRTableCell xrTableCell3;
+        private DevExpress.XtraReports.UI.XRTableCell xrTableCell4;
+        private DevExpress.XtraReports.UI.XRTableCell xrTableCell5;
+        private DevExpress.XtraReports.UI.XRTableCell xrTableCell6;
+        private DevExpress.XtraReports.UI.XRTableCell xrTableCell7;
+        private DevExpress.XtraReports.UI.XRTableCell xrTableCell8;
+        private DevExpress.XtraReports.UI.DetailReportBand DetailReport1;
+        private DevExpress.XtraReports.UI.DetailBand Detail2;
     }
 }
