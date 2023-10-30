@@ -41,15 +41,18 @@ namespace MEDSOFT_Task
 
         private void LoadPatientData() // პაციენტის მონაცემების არსებობის შემთხვევაში input-ების შევსება
         {
-            DataTable patientData = AddEditPatientHandler.PatientGet(PatientId);
+            if (PatientId != 0)
+            {
+                DataTable patientData = AddEditPatientHandler.PatientGet(PatientId);
 
-            tbName.Text = patientData.Rows[0]["FullName"].ToString();
-            pickerBirthDate.Value = Convert.ToDateTime(patientData.Rows[0]["BirthDate"]);
-            cbGender.SelectedValue = Convert.ToInt32(patientData.Rows[0]["GenderID"]);
-            tbPhone.Text = patientData.Rows[0]["Phone"].ToString();
-            tbAddress.Text = patientData.Rows[0]["Address"].ToString();
-            tbEmail.Text = patientData.Rows[0]["Email"].ToString();
-            tbPersonalID.Text = patientData.Rows[0]["PersonalID"].ToString();
+                tbName.Text = patientData.Rows[0]["FullName"].ToString();
+                pickerBirthDate.Value = Convert.ToDateTime(patientData.Rows[0]["BirthDate"]);
+                cbGender.SelectedValue = Convert.ToInt32(patientData.Rows[0]["GenderID"]);
+                tbPhone.Text = patientData.Rows[0]["Phone"].ToString();
+                tbAddress.Text = patientData.Rows[0]["Address"].ToString();
+                tbEmail.Text = patientData.Rows[0]["Email"].ToString();
+                tbPersonalID.Text = patientData.Rows[0]["PersonalID"].ToString();
+            }
         }
 
         private bool ValidateData() // დასამატებელი პაციენტის შეყვანილი მონაცემების ვალიდაცია
@@ -141,7 +144,7 @@ namespace MEDSOFT_Task
             if (ValidateData()) // დამატება/რედაქტირებამდე ვატარებთ შეყვანილი მონაცემების ვალიდაციას
             {
                 PatientModel model = new PatientModel(); // ვქმნით პაციენტის მოდელს და ვანიჭებთ მის ველებს შეყვანილი მონაცემების მნიშვნელობებს
-
+                model.ID = PatientId;
                 model.FullName = tbName.Text;
                 model.Email = tbEmail.Text;
                 model.BirthDate = pickerBirthDate.Value;

@@ -20,6 +20,17 @@ namespace MEDSOFT_Task
             }
         }
 
+        /// <summary>
+        /// არჩეული პაციენტები
+        /// </summary>
+        public int[] _SelectedPatients
+        {
+            get
+            {
+                return gvPatients.GetSelectedRows();
+            }
+        }
+
         public Main()
         {
             // მეთოდების გამოძახება
@@ -33,7 +44,7 @@ namespace MEDSOFT_Task
 
         private void LoadData()
         {
-            dataGrid.DataSource = MainHandler.GetPatients();
+            dataGrid.DataSource = MainHandler.GetPatients(null);
             gvPatients.BestFitColumns();
         }
 
@@ -62,15 +73,42 @@ namespace MEDSOFT_Task
             }
         }
 
+        private void duplicateBtn_Click(object sender, EventArgs e) // პაციენტის ჩანაწერის დუბლირების ღილაკი
+        {
+            if (_SelectedPatients.Length > 0)
+            {
+                MainHandler.Duplicate(_SelectedPatientID);
+                LoadData();
+            }
+            else
+            {
+                MessageBox.Show("აირჩიეთ მხოლოდ ერთი პაციენტი!");
+            }
+        }
+
+        private void printBtn_Click(object sender, EventArgs e) // პაციენტის ჩანაწერის პრინტი
+        {
+            if (_SelectedPatientID > 0)
+            {
+                var print = new XtraReport1();
+                print.DataSource = MainHandler.PatientDSFill(_SelectedPatientID);
+                print.ShowRibbonPreviewDialog();
+
+            }
+            else
+            {
+                MessageBox.Show("აირჩიეთ მხოლოდ ერთი პაციენტი!");
+            }
+        }
+
         private void removeBtn_Click(object sender, EventArgs e) // პაციენტის წაშლის ღილაკი
         {
-            int[] selectedRowHandles = gvPatients.GetSelectedRows(); // ვპოულობთ არჩეულ ჩანაწერებს
-
             List<int> selectedPatientIDs = new List<int>();  // ვქმნით ლისტს არჩეული ჩანაწერების შესანახად
 
-            foreach (int rowHandle in selectedRowHandles)
+            foreach (int rowHandle in _SelectedPatients)
             {
-                selectedPatientIDs.Add(_SelectedPatientID);  // ვამატებთ ლისტში არჩეულ ჩანაწერებს
+                int patientID = (int)gvPatients.GetRowCellValue(rowHandle, colId);
+                selectedPatientIDs.Add(patientID);  // ვამატებთ ლისტში არჩეულ ჩანაწერებს
             }
 
             if (selectedPatientIDs.Count > 0)
@@ -91,32 +129,23 @@ namespace MEDSOFT_Task
             }
         }
 
-        private void printBtn_Click(object sender, EventArgs e)  // პაციენტის ჩანაწერის პრინტი
+        private void searchBtn_Click(object sender, EventArgs e)
         {
-            if (_SelectedPatientID > 0)
+            string patientToSearch = searchingTb.Text;
+
+            if (patientToSearch != null)
             {
-                var print = new XtraReport1();
-                print.DataSource = MainHandler.PatientDSFill(_SelectedPatientID);
-                print.ShowRibbonPreviewDialog();
-                
-            }
-            else
+                dataGrid.DataSource = MainHandler.GetPatients(patientToSearch);
+            } else
             {
-                MessageBox.Show("აირჩიეთ მხოლოდ ერთი პაციენტი!");
+                MessageBox.Show("შეიყვანეთ პაციენტის გვარი და სახელი!");
             }
         }
 
-        private void duplicateBtn_Click(object sender, EventArgs e) // პაციენტის ჩანაწერის დუბლირების ღილაკი
+        private void showAllBtn_Click(object sender, EventArgs e)
         {
-            if (_SelectedPatientID == 1)
-            {
-                MainHandler.Duplicate(_SelectedPatientID);
-                LoadData();
-            }
-            else
-            {
-                MessageBox.Show("აირჩიეთ მხოლოდ ერთი პაციენტი!");
-            }
+            searchingTb.Text = "";
+            LoadData();
         }
     }
 }

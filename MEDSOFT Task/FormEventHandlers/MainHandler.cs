@@ -12,13 +12,14 @@ namespace MEDSOFT_Task
 {
     public class MainHandler
     {
-        public static DataTable GetPatients()
+        public static DataTable GetPatients(string patientToSearch)
         {
             DataTable dataTable = new DataTable();
 
             using (SqlDataAdapter dataAdapter = new SqlDataAdapter("Patient_GetList", DatabaseAccess.Connect()))
             {
                 dataAdapter.SelectCommand.CommandType = CommandType.StoredProcedure;
+                dataAdapter.SelectCommand.Parameters.AddWithValue("@PatientFullName", patientToSearch);
 
                 dataAdapter.Fill(dataTable);
             }

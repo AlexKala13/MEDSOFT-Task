@@ -46,9 +46,14 @@
             this.colAddress = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colEmail = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colPersonalId = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.searchingTb = new System.Windows.Forms.TextBox();
+            this.searchBtn = new System.Windows.Forms.Button();
+            this.showAllBtn = new System.Windows.Forms.Button();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGrid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gvPatients)).BeginInit();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
@@ -101,23 +106,19 @@
             // 
             // removeBtn
             // 
-            this.removeBtn.Font = new System.Drawing.Font("Sylfaen", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.removeBtn.Image = ((System.Drawing.Image)(resources.GetObject("removeBtn.Image")));
             this.removeBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.removeBtn.Name = "removeBtn";
             this.removeBtn.Size = new System.Drawing.Size(82, 36);
-            this.removeBtn.Tag = "";
             this.removeBtn.Text = "წაშლა";
             this.removeBtn.Click += new System.EventHandler(this.removeBtn_Click);
             // 
             // printBtn
             // 
-            this.printBtn.Font = new System.Drawing.Font("Sylfaen", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.printBtn.Image = ((System.Drawing.Image)(resources.GetObject("printBtn.Image")));
             this.printBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.printBtn.Name = "printBtn";
             this.printBtn.Size = new System.Drawing.Size(89, 36);
-            this.printBtn.Tag = "";
             this.printBtn.Text = "ბეჭდვა";
             this.printBtn.Click += new System.EventHandler(this.printBtn_Click);
             // 
@@ -134,14 +135,14 @@
             // 
             // dataGrid
             // 
-            this.dataGrid.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataGrid.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.dataGrid.EmbeddedNavigator.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.dataGrid.Font = new System.Drawing.Font("Sylfaen", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dataGrid.Location = new System.Drawing.Point(0, 39);
+            this.dataGrid.Location = new System.Drawing.Point(0, 79);
             this.dataGrid.MainView = this.gvPatients;
             this.dataGrid.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.dataGrid.Name = "dataGrid";
-            this.dataGrid.Size = new System.Drawing.Size(1077, 710);
+            this.dataGrid.Size = new System.Drawing.Size(1077, 670);
             this.dataGrid.TabIndex = 6;
             this.dataGrid.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gvPatients});
@@ -252,12 +253,52 @@
             this.colPersonalId.VisibleIndex = 7;
             this.colPersonalId.Width = 87;
             // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.showAllBtn);
+            this.panel1.Controls.Add(this.searchBtn);
+            this.panel1.Controls.Add(this.searchingTb);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel1.Location = new System.Drawing.Point(0, 39);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(1077, 40);
+            this.panel1.TabIndex = 7;
+            // 
+            // searchingTb
+            // 
+            this.searchingTb.ForeColor = System.Drawing.SystemColors.WindowFrame;
+            this.searchingTb.Location = new System.Drawing.Point(12, 8);
+            this.searchingTb.Name = "searchingTb";
+            this.searchingTb.Size = new System.Drawing.Size(226, 25);
+            this.searchingTb.TabIndex = 0;
+            // 
+            // searchBtn
+            // 
+            this.searchBtn.Location = new System.Drawing.Point(253, 8);
+            this.searchBtn.Name = "searchBtn";
+            this.searchBtn.Size = new System.Drawing.Size(94, 25);
+            this.searchBtn.TabIndex = 1;
+            this.searchBtn.Text = "ძებნა";
+            this.searchBtn.UseVisualStyleBackColor = true;
+            this.searchBtn.Click += new System.EventHandler(this.searchBtn_Click);
+            // 
+            // showAllBtn
+            // 
+            this.showAllBtn.Location = new System.Drawing.Point(872, 8);
+            this.showAllBtn.Name = "showAllBtn";
+            this.showAllBtn.Size = new System.Drawing.Size(193, 25);
+            this.showAllBtn.TabIndex = 2;
+            this.showAllBtn.Text = "ყველა პაციენტის ჩვენება";
+            this.showAllBtn.UseVisualStyleBackColor = true;
+            this.showAllBtn.Click += new System.EventHandler(this.showAllBtn_Click);
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Silver;
             this.ClientSize = new System.Drawing.Size(1077, 749);
+            this.Controls.Add(this.panel1);
             this.Controls.Add(this.dataGrid);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.label1);
@@ -274,6 +315,8 @@
             this.toolStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGrid)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gvPatients)).EndInit();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -294,9 +337,13 @@
         private DevExpress.XtraGrid.Columns.GridColumn colPersonalId;
         private System.Windows.Forms.ToolStripButton addBtn;
         private System.Windows.Forms.ToolStripButton editBtn;
-        private System.Windows.Forms.ToolStripButton removeBtn;
-        private System.Windows.Forms.ToolStripButton printBtn;
         private System.Windows.Forms.ToolStripButton duplicateBtn;
+        private System.Windows.Forms.ToolStripButton printBtn;
+        private System.Windows.Forms.ToolStripButton removeBtn;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Button searchBtn;
+        private System.Windows.Forms.TextBox searchingTb;
+        private System.Windows.Forms.Button showAllBtn;
     }
 }
 
